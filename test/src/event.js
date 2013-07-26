@@ -272,6 +272,30 @@ describe('event', function() {
     expect(spy.callCount).to.equal(1);
   });
 
+  it.only('should trigger ready event on re-render view and attach to DOM', function () {
+    var spy = this.spy();
+    var TestView = Thorax.View.extend({
+      initialize: function() {
+        this.on({
+          'ready': spy
+        });
+      },
+      template: function() {
+        return '<button>foo</button>';
+      }
+    });
+
+    var view = new TestView();
+    expect(spy).to.not.have.been.called;
+
+    view.appendTo(document.body);
+    expect(spy).to.have.been.calledOnce;
+
+    // Expect re-render to fire "ready" again.
+    view.render();
+    expect(spy).to.have.been.calledTwice;
+  });
+
   it('should trigger ready event on layout view', function() {
     var spy = this.spy(),
         layoutView = new Thorax.LayoutView(),
