@@ -272,7 +272,7 @@ describe('event', function() {
     expect(spy.callCount).to.equal(1);
   });
 
-  it.only('should trigger ready event on re-render view and attach to DOM', function () {
+  it('should trigger ready event on re-render view and attach to DOM', function () {
     var spy = this.spy();
     var TestView = Thorax.View.extend({
       initialize: function() {
